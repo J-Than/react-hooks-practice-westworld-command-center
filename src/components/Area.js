@@ -4,6 +4,8 @@ import "../stylesheets/Area.css";
 
 function Area({ area, hosts, selectedHost, onSelectHost }) {
 
+  const currentHosts = hosts.filter(host => host.active && host.area===area.name)
+
   function titleCaseLabel() {
     let label = area.name.replace("_", " ")
     return label.replace(
@@ -22,7 +24,7 @@ function Area({ area, hosts, selectedHost, onSelectHost }) {
       <h3 className="labels">
         {titleCaseLabel()}
       </h3>
-      <HostList hosts={hosts} selectedHost={selectedHost} onSelectHost={onSelectHost} />
+      <HostList hosts={currentHosts} selectedHost={selectedHost} onSelectHost={onSelectHost} />
     </div>
   );
 }
