@@ -10,18 +10,21 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo() {
-  // This state is just to show how the dropdown component works.
-  // Options have to be formatted in this way (array of objects with keys of: key, text, value)
-  // Value has to match the value in the object to render the right text.
+function HostInfo({ areas, selectedHost }) {
 
-  // IMPORTANT: But whether it should be stateful or not is entirely up to you. Change this component however you like.
-  const [options] = useState([
-    { key: "some_area", text: "Some Area", value: "some_area" },
-    { key: "another_area", text: "Another Area", value: "another_area" },
-  ]);
+  function titleCaseLabel(area) {
+    let label = area.name.replace("_", " ")
+    return label.replace(
+      /\w\S*/g,
+      function(text) {
+        return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+      }
+    );
+  }
 
-  const [value] = useState("some_area");
+  const options = areas.map(area => {
+    return { key: area.name, text: titleCaseLabel(area), value: area.name }
+    })
 
   function handleOptionChange(e, { value }) {
     // the 'value' attribute is given via Semantic's Dropdown component.
@@ -33,11 +36,14 @@ function HostInfo() {
     console.log("The radio button fired");
   }
 
+  let fullName = selectedHost.firstName;
+  fullName = fullName.concat("", selectedHost.lastName==="n/a" ? "" : ` ${selectedHost.lastName}`)
+
   return (
     <Grid>
       <Grid.Column width={6}>
         <Image
-          src={/* pass in the right image here */ ""}
+          src={selectedHost.imageUrl}
           floated="left"
           size="small"
           className="hostImg"
@@ -47,16 +53,14 @@ function HostInfo() {
         <Card>
           <Card.Content>
             <Card.Header>
-              {"Bob"} | {true ? <Icon name="man" /> : <Icon name="woman" />}
-              {/* Think about how the above should work to conditionally render the right First Name and the right gender Icon */}
+              {fullName} | 
+              {selectedHost.gender==="Male" ? <Icon name="man" /> : <Icon name="woman" />}
             </Card.Header>
             <Card.Meta>
-              {/* Sometimes the label should take "Decommissioned". How are we going to conditionally render that? */}
-              {/* Checked takes a boolean and determines what position the switch is in. Should it always be true? */}
               <Radio
                 onChange={handleRadioChange}
-                label={"Active"}
-                checked={true}
+                label={selectedHost.active ? "Active" : "Decommissioned"}
+                checked={selectedHost.active}
                 slider
               />
             </Card.Meta>
@@ -64,7 +68,7 @@ function HostInfo() {
             Current Area:
             <Dropdown
               onChange={handleOptionChange}
-              value={value}
+              value={selectedHost.area}
               options={options}
               selection
             />

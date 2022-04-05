@@ -5,14 +5,14 @@ import Details from "./Details";
 import LogPanel from "./LogPanel";
 import "../stylesheets/Headquarters.css";
 
-function Headquarters({ hosts, selectedHost, onSelectHost }) {
+function Headquarters({ areas, hosts, selectedHost, onSelectHost }) {
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
         <ColdStorage hosts={hosts} selectedHost={selectedHost} onSelectHost={onSelectHost} />
       </Grid.Column>
       <Grid.Column width={5}>
-        <Details />
+        <Details areas={areas} selectedHost={selectedHost} />
       </Grid.Column>
       <Grid.Column width={3}>
         <LogPanel />

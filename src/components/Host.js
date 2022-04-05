@@ -4,12 +4,8 @@ import "../stylesheets/Host.css";
 
 function Host({ host, selectedHost, onSelectHost }) {
 
-  let selected = false;
+  let selected = selectedHost===undefined ? false : selectedHost.id===host.id;
   
-  if (selectedHost!==undefined) {
-    selected = selectedHost.id===host.id
-  }
-
   function handleHostClick() {
     onSelectHost(host)
   }

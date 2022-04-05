@@ -4,8 +4,6 @@ import WestworldMap from "./WestworldMap";
 import Headquarters from "./Headquarters";
 import "../stylesheets/App.css";
 
-const API = "http://localhost:3001/"
-
 function App() {
 
   const [areas, setAreas] = useState([]);
@@ -13,13 +11,13 @@ function App() {
   const [selectedHost, setSelectedHost] = useState(undefined)
 
   useEffect(() => {
-    fetch(`${API}areas`)
+    fetch("http://localhost:3001/areas")
     .then(r => r.json())
     .then(data => setAreas(data))
   }, [])
 
   useEffect(() => {
-    fetch(`${API}hosts`)
+    fetch("http://localhost:3001/hosts")
     .then(r => r.json())
     .then(data => setHosts(data))
   }, [])
@@ -31,7 +29,7 @@ function App() {
   return (
     <Segment id="app">
       <WestworldMap areas={areas} hosts={hosts} selectedHost={selectedHost} onSelectHost={updateSelectedHost} />
-      <Headquarters hosts={hosts} selectedHost={selectedHost} onSelectHost={updateSelectedHost} />
+      <Headquarters areas={areas} hosts={hosts} selectedHost={selectedHost} onSelectHost={updateSelectedHost} />
     </Segment>
   );
 }
