@@ -6,24 +6,12 @@ function Area({ area, hosts, selectedHost, onSelectHost }) {
 
   const currentHosts = hosts.filter(host => host.active && host.area===area.name)
 
-  function titleCaseLabel() {
-    let label = area.name.replace("_", " ")
-    return label.replace(
-      /\w\S*/g,
-      function(text) {
-        return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
-      }
-    );
-  }
-
   return (
     <div
       className="area"
       id={area.name}
     >
-      <h3 className="labels">
-        {titleCaseLabel()}
-      </h3>
+      <h3 className="labels">{area.displayName}</h3>
       <HostList hosts={currentHosts} selectedHost={selectedHost} onSelectHost={onSelectHost} />
     </div>
   );

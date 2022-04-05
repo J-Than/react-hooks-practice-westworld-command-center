@@ -57,7 +57,7 @@
       "active": false,
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/b/b2/Angela_Reunion.jpg/revision/latest/scale-to-width-down/310?cb=20180509174920",
       "gender": "Female",
-      "area": "lowlands",
+      "area": "python_pass",
       "authorized": false
     },
     {
@@ -127,7 +127,7 @@
       "active": true,
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/3/3b/Major_Craddock_The_Riddle_of_the_Sphinx.jpg/revision/latest?cb=20180511205852",
       "gender": "Male",
-      "area": "pariah",
+      "area": "python_pass",
       "authorized": false
     },
     {
@@ -156,37 +156,43 @@
       "id": 1,
       "name": "high_plains",
       "limit": 8,
-      "auth_req": false
+      "auth_req": false,
+      "displayName": "High Plains"
     },
     {
       "id": 2,
       "name": "lowlands",
       "limit": 6,
-      "auth_req": false
+      "auth_req": false,
+      "displayName": "Lowlands"
     },
     {
       "id": 3,
       "name": "under_construction",
       "limit": 8,
-      "auth_req": true
+      "auth_req": true,
+      "displayName": "Under Construction"
     },
     {
       "id": 4,
       "name": "pariah",
       "limit": 14,
-      "auth_req": false
+      "auth_req": false,
+      "displayName": "Pariah"
     },
     {
       "id": 5,
       "name": "python_pass",
       "limit": 14,
-      "auth_req": false
+      "auth_req": false,
+      "displayName": "Python Pass"
     },
     {
       "id": 6,
       "name": "badlands",
       "limit": 10,
-      "auth_req": false
+      "auth_req": false,
+      "displayName": "Badlands"
     }
   ]
 }

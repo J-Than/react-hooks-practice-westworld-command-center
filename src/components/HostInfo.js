@@ -12,22 +12,10 @@ import "../stylesheets/HostInfo.css";
 
 function HostInfo({ areas, selectedHost, onActivation, onAreaChange }) {
 
-  function titleCaseLabel(area) {
-    let label = area.name.replace("_", " ")
-    return label.replace(
-      /\w\S*/g,
-      function(text) {
-        return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
-      }
-    );
-  }
-
-  const options = areas.map(area => {
-    return { key: area.name, text: titleCaseLabel(area), value: area.name }
-    })
+  const options = areas.map((area) => ({ key: area.name, text: area.displayName, value: area.name }))
 
   function handleOptionChange(e, { value }) {
-    console.log(e.target);
+    onAreaChange(value)
     // the 'value' attribute is given via Semantic's Dropdown component.
     // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
     // See the Semantic docs for more info: https://react.semantic-ui.com/modules/dropdown/#usage-controlled
