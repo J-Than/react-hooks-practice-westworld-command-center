@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Radio,
   Icon,
@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({ areas, selectedHost }) {
+function HostInfo({ areas, selectedHost, onActivation, onAreaChange }) {
 
   function titleCaseLabel(area) {
     let label = area.name.replace("_", " ")
@@ -27,13 +27,14 @@ function HostInfo({ areas, selectedHost }) {
     })
 
   function handleOptionChange(e, { value }) {
+    console.log(e.target);
     // the 'value' attribute is given via Semantic's Dropdown component.
     // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
     // See the Semantic docs for more info: https://react.semantic-ui.com/modules/dropdown/#usage-controlled
   }
 
   function handleRadioChange() {
-    console.log("The radio button fired");
+    onActivation();
   }
 
   let fullName = selectedHost.firstName;
