@@ -10,6 +10,7 @@ function App() {
 
   const [areas, setAreas] = useState([]);
   const [hosts, setHosts] = useState([]);
+  const [selectedHost, setSelectedHost] = useState(undefined)
 
   useEffect(() => {
     fetch(`${API}areas`)
@@ -23,10 +24,14 @@ function App() {
     .then(data => setHosts(data))
   }, [])
 
+  function updateSelectedHost(newHost) {
+    setSelectedHost(newHost);
+  }
+
   return (
     <Segment id="app">
-      <WestworldMap areas={areas} />
-      <Headquarters />
+      <WestworldMap areas={areas} hosts={hosts} selectedHost={selectedHost} onSelectHost={updateSelectedHost} />
+      <Headquarters hosts={hosts} selectedHost={selectedHost} onSelectHost={updateSelectedHost} />
     </Segment>
   );
 }

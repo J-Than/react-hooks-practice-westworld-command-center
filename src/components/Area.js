@@ -1,7 +1,8 @@
 import React from "react";
+import HostList from "./HostList";
 import "../stylesheets/Area.css";
 
-function Area({ area }) {
+function Area({ area, hosts, selectedHost, onSelectHost }) {
 
   function titleCaseLabel() {
     let label = area.name.replace("_", " ")
@@ -21,9 +22,7 @@ function Area({ area }) {
       <h3 className="labels">
         {titleCaseLabel()}
       </h3>
-      {/* <Segment compact>
-        {/* See Checkpoint 1 item 2 in the Readme for a clue as to what goes here */}
-      {/* </Segment> */}
+      <HostList hosts={hosts} selectedHost={selectedHost} onSelectHost={onSelectHost} />
     </div>
   );
 }
