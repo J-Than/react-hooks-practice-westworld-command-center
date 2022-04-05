@@ -1,18 +1,29 @@
 import React from "react";
 import "../stylesheets/Area.css";
 
-function Area() {
+function Area({ area }) {
+
+  function titleCaseLabel() {
+    let label = area.name.replace("_", " ")
+    return label.replace(
+      /\w\S*/g,
+      function(text) {
+        return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+      }
+    );
+  }
+
   return (
     <div
       className="area"
-      id={
-        /* Pass in the area name here to make sure this is styled correctly */ "id"
-      }
+      id={area.name}
     >
       <h3 className="labels">
-        {/* Don't just pass in the name from the data...clean that thing up */}
+        {titleCaseLabel()}
       </h3>
-      {/* See Checkpoint 1 item 2 in the Readme for a clue as to what goes here */}
+      {/* <Segment compact>
+        {/* See Checkpoint 1 item 2 in the Readme for a clue as to what goes here */}
+      {/* </Segment> */}
     </div>
   );
 }
