@@ -5,7 +5,7 @@ import Details from "./Details";
 import LogPanel from "./LogPanel";
 import "../stylesheets/Headquarters.css";
 
-function Headquarters({ areas, hosts, selectedHost, onSelectHost, onActivation, onAreaChange }) {
+function Headquarters({ areas, hosts, activate, selectedHost, onSelectHost, onActivation, onAreaChange, onActivateAll }) {
 
   function areaCheck(area) {
     const hostsInArea = hosts.filter(h => h.area===area).length;
@@ -26,7 +26,7 @@ function Headquarters({ areas, hosts, selectedHost, onSelectHost, onActivation, 
         <Details areas={areas} selectedHost={selectedHost} onActivation={onActivation} onAreaChange={areaCheck} />
       </Grid.Column>
       <Grid.Column width={3}>
-        <LogPanel />
+        <LogPanel activate={activate} onActivateAll={onActivateAll} />
       </Grid.Column>
     </Grid>
   );

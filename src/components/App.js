@@ -47,6 +47,14 @@ function App() {
     })
   }
 
+  function handleActivateAll() {
+    setActivate(activate => activate = !activate)
+    // for(i=0;i<json.hits.length;i++) {
+    //   var transformations = [{ op: 'move', from:'/hits/'+i+'/_id', path:'/hits/'+i+'/pizza'}];
+    //   var result = jsonpatch.apply(json,transformations);     
+    // }        
+  }
+
   function handleActiveSwitch() {
     selectedHostUpdates = {...selectedHost, active: !selectedHost.active}
     syncSelectedHost();
@@ -68,10 +76,12 @@ function App() {
       <Headquarters
         areas={areas}
         hosts={hosts}
+        activate={activate}
         selectedHost={selectedHost}
         onSelectHost={updateSelectedHost}
         onActivation={handleActiveSwitch}
         onAreaChange={handleCurrentArea}
+        onActivateAll={handleActivateAll}
       />
     </Segment>
   );
