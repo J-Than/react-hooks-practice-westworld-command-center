@@ -8,7 +8,8 @@ function App() {
 
   const [areas, setAreas] = useState([]);
   const [hosts, setHosts] = useState([]);
-  const [selectedHost, setSelectedHost] = useState(undefined)
+  const [selectedHost, setSelectedHost] = useState(undefined);
+  const [activate, setActivate] = useState(true);
   let selectedHostUpdates;
 
   useEffect(() => {
