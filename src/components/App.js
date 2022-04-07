@@ -4,6 +4,8 @@ import WestworldMap from "./WestworldMap";
 import Headquarters from "./Headquarters";
 import "../stylesheets/App.css";
 
+let recoverHosts = [];
+
 function App() {
 
   const [areas, setAreas] = useState([]);
@@ -47,12 +49,32 @@ function App() {
     })
   }
 
+  function updateAll(i) {
+    if (hosts[i].active !== activate) {
+      fetch(`http://localhost:3001/hosts/${i+1}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({active: activate})
+      })
+      .then(r => r.json())
+      .then(data => {
+        const updateHosts = [...hosts];
+        const found = updateHosts.find(h => h.id===data.id);
+        const index = updateHosts.indexOf(found);
+        updateHosts[index] = data;
+        setHosts(updateHosts);
+      })
+    }
+  }
+
   function handleActivateAll() {
-    setActivate(activate => activate = !activate)
-    // for(i=0;i<json.hits.length;i++) {
-    //   var transformations = [{ op: 'move', from:'/hits/'+i+'/_id', path:'/hits/'+i+'/pizza'}];
-    //   var result = jsonpatch.apply(json,transformations);     
-    // }        
+    for (let i=0; i<hosts.length; i++) {
+      setTimeout(updateAll, 10*i, i)
+    }
+    setActivate(activate => activate = !activate);
+    if (selectedHost!==undefined) {setTimeout(syncSelectedHost, 150)};
   }
 
   function handleActiveSwitch() {
