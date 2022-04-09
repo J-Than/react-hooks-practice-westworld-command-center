@@ -32,8 +32,8 @@ function LogPanel({ activate, onActivateAll }) {
       {/* This isn't always going to be the same color...*/}
       {/* Should the button always read "ACTIVATE ALL"? When should it read "DECOMMISSION ALL"? */}
       <Button
-        fluid color={activate ? "red" : "green" }
-        content={activate ? "ACTIVATE ALL" : "DECOMMISSION ALL"}
+        fluid color={activate ? "green" : "red"}
+        content={activate ? "DECOMMISSION ALL" : "ACTIVATE ALL"}
         onClick={onActivateAll}
       />
     </Segment>
