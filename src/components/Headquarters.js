@@ -5,17 +5,7 @@ import Details from "./Details";
 import LogPanel from "./LogPanel";
 import "../stylesheets/Headquarters.css";
 
-function Headquarters({ areas, hosts, activate, selectedHost, onSelectHost, onActivation, onAreaChange, onActivateAll }) {
-
-  function areaCheck(area) {
-    const hostsInArea = hosts.filter(h => h.area===area).length;
-    const areaToCheck = areas.find(a => a.name===area);
-    if (hostsInArea < areaToCheck.limit) {
-      onAreaChange(area);
-    } else {
-      console.log("ERROR: Too many hosts.")
-    }
-  }
+function Headquarters({ areas, hosts, activate, selectedHost, onSelectHost, onActivation, onAreaChange, onActivateAll, logs }) {
 
   return (
     <Grid celled="internally">
@@ -23,10 +13,10 @@ function Headquarters({ areas, hosts, activate, selectedHost, onSelectHost, onAc
         <ColdStorage hosts={hosts} selectedHost={selectedHost} onSelectHost={onSelectHost} />
       </Grid.Column>
       <Grid.Column width={5}>
-        <Details areas={areas} selectedHost={selectedHost} onActivation={onActivation} onAreaChange={areaCheck} />
+        <Details areas={areas} selectedHost={selectedHost} onActivation={onActivation} onAreaChange={onAreaChange} />
       </Grid.Column>
       <Grid.Column width={3}>
-        <LogPanel activate={activate} onActivateAll={onActivateAll} />
+        <LogPanel activate={activate} onActivateAll={onActivateAll} logs={logs} />
       </Grid.Column>
     </Grid>
   );

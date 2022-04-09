@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Segment } from "semantic-ui-react";
 import WestworldMap from "./WestworldMap";
 import Headquarters from "./Headquarters";
+import { Log } from "../services/Log";
 import "../stylesheets/App.css";
 
 let hostIterator = -2;
@@ -12,9 +13,9 @@ function App() {
   const [hosts, setHosts] = useState([]);
   const [selectedHost, setSelectedHost] = useState(undefined);
   const [activate, setActivate] = useState(false);
+  const [logs, setLogs] = useState([]);
   let selectedHostUpdates;
   
-
   useEffect(() => {
     fetch("http://localhost:3001/areas")
     .then(r => r.json())
@@ -57,6 +58,11 @@ function App() {
   }
 
   function handleActivateAll() {
+    if (!activate) {
+      setLogs([(Log.warn("Activating all hosts!")), ...logs ]);
+    } else {
+      setLogs([(Log.notify("Decommissioning all hosts!")), ...logs ]);
+    }
     setActivate(activate => activate = !activate)
     hostIterator++
   }
@@ -88,12 +94,28 @@ function App() {
   }
 
   function handleActiveSwitch() {
-    selectedHostUpdates = {...selectedHost, active: !selectedHost.active}
+    selectedHostUpdates = {...selectedHost, active: !selectedHost.active};
+    if (!selectedHost.active) {
+      setLogs([(Log.warn(`Activated ${selectedHost.firstName}`)), ...logs ]);
+    } else {
+      setLogs([(Log.notify(`Decommissioned ${selectedHost.firstName}`)), ...logs ]);
+    }
     syncSelectedHost();
   }
 
+  function handleAreaCheck(selectedArea) {
+    const hostsInArea = hosts.filter(h => h.area===selectedArea).length;
+    const areaToCheck = areas.find(a => a.name===selectedArea);
+    if (hostsInArea < areaToCheck.limit) {
+      handleCurrentArea(selectedArea);
+    } else {
+      setLogs([(Log.error(`Too many hosts. Cannot add ${selectedHost.firstName} to ${areas[areas.indexOf(areas.find(ar => ar.name===selectedArea))].displayName}`)), ...logs ]);
+    }
+  }
+
   function handleCurrentArea(selectedArea) {
-    selectedHostUpdates = {...selectedHost, area: selectedArea}
+    selectedHostUpdates = {...selectedHost, area: selectedArea};
+    setLogs([(Log.notify(`${selectedHost.firstName} set in area ${areas[areas.indexOf(areas.find(ar => ar.name===selectedArea))].displayName}`)), ...logs ]);
     syncSelectedHost();
   }
 
@@ -112,8 +134,9 @@ function App() {
         selectedHost={selectedHost}
         onSelectHost={updateSelectedHost}
         onActivation={handleActiveSwitch}
-        onAreaChange={handleCurrentArea}
+        onAreaChange={handleAreaCheck}
         onActivateAll={handleActivateAll}
+        logs={logs}
       />
     </Segment>
   );
