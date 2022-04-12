@@ -35,7 +35,7 @@ function App() {
   }
 
   function updateSelectedHost(newHost) {
-    setSelectedHost(newHost);
+    setSelectedHost(selectedHost => selectedHost = newHost);
   }
 
   function syncSelectedHost() {
@@ -64,7 +64,19 @@ function App() {
       setLogs([(Log.notify("Decommissioning all hosts!")), ...logs ]);
     }
     setActivate(activate => activate = !activate)
-    hostIterator++
+    // hostIterator++
+    const promises = hosts.map(host => {
+      return fetch(`http://localhost:3001/hosts/${host.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({...host, active: activate})
+      })
+    })
+
+    Promise.all(promises).then(resp => resp.map(r => r.json()))
+    .then(data => Promise.all(data).then(d => setHosts(d)))
   }
 
   function handleActivateIteration() {
